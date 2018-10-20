@@ -10,20 +10,44 @@ class App extends React.Component {
     this.state = { 
       repos: []
     }
+  }
 
+  componentDidMount() {
+    $.ajax({
+      url: 'http://127.0.0.1:1128/repos',
+      method: 'GET',
+      success: data => { 
+        this.setState({repos: data});
+        console.log(data); 
+      },
+      error: () => console.log('Could not retrieve repos')
+    });
   }
 
   search (term) {
     console.log(`${term} was searched`);
-    // TODO
+    var obj = {term};
+    $.ajax({
+      url: 'http://127.0.0.1:1128/repos',
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(obj),
+      success: data => {
+        this.componentDidMount();
+        console.log(data); 
+      },
+      error: () => console.log('Could not Post to the Database') 
+    });
   }
 
   render () {
-    return (<div>
-      <h1>Github Fetcher</h1>
-      <RepoList repos={this.state.repos}/>
-      <Search onSearch={this.search.bind(this)}/>
-    </div>)
+    return (
+      <div>
+        <h1>Github Fetcher</h1>
+        <RepoList repos={this.state.repos} />
+        <Search onSearch={this.search.bind(this)} />
+      </div>
+    )
   }
 }
 
