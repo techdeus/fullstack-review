@@ -14,7 +14,7 @@ let getReposByUsername = (username, cb) => {
       'Authorization': `token ${config.TOKEN}`
     }
   };
-  request(options, cb);    
+  request(options, cb);
 }
 
 module.exports.getReposByUsername = getReposByUsername;

@@ -26,7 +26,7 @@ let save = repos => {
       
       id: repos[i].id,
       name: repos[i].name,
-      // owner_login: repo.owner.login,
+      // owner_login: repos[i].owner[login],
       html_url: repos[i].html_url,
       description: repos[i].description,
       stargazers_count: repos[i].stargazers_count,
@@ -50,7 +50,7 @@ let fetch = (callback) => {
     } else {
       callback(repo);
     }
-  }).limit(10).sort({forks_count: 'desc'})
+  }).limit(200).sort({forks_count: 'desc'})
 }
 
 module.exports.save = save;
